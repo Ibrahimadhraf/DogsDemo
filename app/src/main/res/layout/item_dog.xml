@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout  xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="dog"
+            type="com.ibrahim.kotlindemo.model.DogBreed" />
+        <variable
+            name="listener"
+            type="com.ibrahim.kotlindemo.view.DogClickListener" />
+    </data>
 <LinearLayout
     android:orientation="horizontal"
     android:layout_width="match_parent"
+    android:onClick="@{listener::dogClickListener}"
     android:layout_height="125dp">
+    <TextView
+        android:id="@+id/uuId"
+        android:visibility="gone"
+        android:text="@{String.valueOf(dog.uuId)}"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 <ImageView
     android:id="@+id/dogImage"
     android:layout_width="0dp"
     android:layout_height="match_parent"
+    android:imageUrl="@{dog.imageUrl}"
     android:layout_weight="2"
     android:padding="4dp"/>
     <LinearLayout
@@ -22,13 +38,13 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     style="@style/Title"
-    android:text="dogName"/>
+    android:text="@{dog.dogBreed}"/>
         <TextView
             android:id="@+id/lifespan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Text"
-            android:text="lifespan"/>
+            android:text="@{dog.lifeSpan}"/>
     </LinearLayout>
 </LinearLayout>
 </layout>

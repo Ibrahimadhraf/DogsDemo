@@ -4,6 +4,7 @@ package com.ibrahim.kotlindemo.util
 
 import android.content.Context
 import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -26,4 +27,8 @@ fun ImageView.loadImage(url: String?, progressDrawable: CircularProgressDrawable
         .setDefaultRequestOptions(options)
         .load(url)
         .into(this)
+}
+@BindingAdapter("android:imageUrl")
+fun  loadImage(view: ImageView ,url: String?){
+    view.loadImage(url , getProgressDrawable(view.context))
 }

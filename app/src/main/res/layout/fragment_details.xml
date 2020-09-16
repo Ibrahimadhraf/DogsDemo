@@ -3,10 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
+<data>
+    <variable
+        name="dog"
+        type="com.ibrahim.kotlindemo.model.DogBreed" />
+    <variable
+        name="palette"
+        type="com.ibrahim.kotlindemo.model.DogPalette" />
+</data>
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+      android:background="@{palette.color}"
     tools:context=".view.DetailsFragment">
 
 <ImageView
@@ -14,14 +22,15 @@
     android:id="@+id/dogImages"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:imageUrl="@{dog.imageUrl}"
     android:layout_alignParentTop="true"
-    android:src="@mipmap/ic_launcher_foreground"
+
     android:scaleType="fitCenter"
     android:minHeight="200dp"
     />
 <TextView
     android:id="@+id/dogName"
-    android:text="DogName"
+    android:text="@{dog.dogBreed}"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_below="@id/dogImages"
@@ -30,7 +39,7 @@
     android:layout_margin="4dp"/>
     <TextView
         android:id="@+id/dogPurpose"
-        android:text="Dog Purpose"
+        android:text="@{dog.bredFor}"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/dogName"
@@ -39,7 +48,7 @@
         android:layout_margin="4dp"/>
     <TextView
         android:id="@+id/dogTemperament"
-        android:text="Dog Temperament"
+        android:text="@{dog.temperament}"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/dogPurpose"
@@ -48,7 +57,7 @@
         android:layout_margin="4dp"/>
     <TextView
         android:id="@+id/lifeSpan"
-        android:text="Dog lifeSpan"
+        android:text="@{dog.lifeSpan}"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/dogTemperament"

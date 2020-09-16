@@ -13,9 +13,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var str = "Hello World"
-        str?.let {
-            Log.d("Test" ,"$it") }
         navController=Navigation.findNavController(this ,R.id.fragment);
         NavigationUI.setupActionBarWithNavController(this ,navController)
     }

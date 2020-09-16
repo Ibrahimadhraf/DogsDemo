@@ -7,12 +7,14 @@ import androidx.lifecycle.MutableLiveData
 import com.ibrahim.kotlindemo.model.DogBreed
 import com.ibrahim.kotlindemo.model.DogDatabase
 import com.ibrahim.kotlindemo.model.DogsApiService
+import com.ibrahim.kotlindemo.util.NotificationHelper
 import com.ibrahim.kotlindemo.util.SharedPreferenceHelper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
+import java.lang.NumberFormatException
 
 class ListViewModel(application: Application) : BaseViewModel(application) {
     private var preferenceHelper = SharedPreferenceHelper()
@@ -24,7 +26,7 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
     val isLoading = MutableLiveData<Boolean>()
     private val disposable = CompositeDisposable()
     fun refresh() {
-
+       checkCacheDuration()
 val updateTime=preferenceHelper.getUpdateTime()
 
         if(updateTime != null && updateTime != 0L && System.nanoTime() - updateTime < refreshTime) {
@@ -34,7 +36,20 @@ val updateTime=preferenceHelper.getUpdateTime()
         }
 
     }
-fun refreshBypassCache(){
+
+    private fun checkCacheDuration() {
+      val checkPreference=preferenceHelper.getCacheDuration()
+        try {
+      val cachePreferenceInt=checkPreference?.toInt() ?:5*60
+            refreshTime=cachePreferenceInt.times(1000*1000*1000L)
+            Log.d("prfTest","$cachePreferenceInt")
+            Log.d("prfTest","$refreshTime")
+        }catch (e:NumberFormatException){
+            e.printStackTrace()
+        }
+    }
+
+    fun refreshBypassCache(){
     fetchRemote()
 }
     private fun fetchFromDataBase() {
@@ -42,11 +57,7 @@ fun refreshBypassCache(){
         launch {
             val dogs=DogDatabase(getApplication()).dogDao().getAllDogs()
             dogsRetrieved(dogs)
-            Toast.makeText(
-                getApplication(),
-                "Doge Retrieved From  DataBase",
-                Toast.LENGTH_SHORT
-            ).show()
+
         }
     }
 
@@ -65,11 +76,7 @@ fun refreshBypassCache(){
 
 
                             storeDogsLocally(dogsList)
-                            Toast.makeText(
-                                getApplication(),
-                                "Doge Retrieved From endpoint",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                           NotificationHelper(getApplication()).createNotification()
                         }
 
 

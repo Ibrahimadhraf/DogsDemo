@@ -12,6 +12,9 @@
             app:destination="@id/detailsFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_settings"
+            app:destination="@id/settingFragment" />
 
     </fragment>
     <fragment
@@ -28,5 +31,13 @@
             android:defaultValue="0"
             app:argType="integer"/>
 
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.ibrahim.kotlindemo.view.SettingFragment"
+        android:label="SettingFragment" >
+        <action
+            android:id="@+id/back_home"
+            app:destination="@id/listFragment" />
     </fragment>
 </navigation>
